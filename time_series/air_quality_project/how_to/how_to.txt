@@ -1,0 +1,31 @@
+import os
+
+%cd /content/Data_Sceince_Courses/time_series/air_quality_project
+
+# Define the full path including the new 'etl' folder
+new_folder_path = "/content/Data_Sceince_Courses/time_series/air_quality_project/how_to"
+
+# Create the folder securely
+os.makedirs(new_folder_path, exist_ok=True)
+
+print(f"Successfully created: {new_folder_path}")
+
+
+import os
+import shutil
+
+target_dir = "/content/Data_Sceince_Courses/time_series/air_quality_project"
+
+if os.path.exists(target_dir):
+    for item in os.listdir(target_dir):
+        item_path = os.path.join(target_dir, item)
+        try:
+            if os.path.isfile(item_path) or os.path.islink(item_path):
+                os.unlink(item_path)  # Deletes individual files or shortcuts
+            elif os.path.isdir(item_path):
+                shutil.rmtree(item_path)  # Deletes folders recursively
+        except Exception as e:
+            print(f"Failed to delete {item_path}. Reason: {e}")
+    print(f"Successfully emptied all contents inside: {target_dir}")
+else:
+    print("Directory path not found.")
